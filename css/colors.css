@@ -1,0 +1,19 @@
+html {
+
+    --color-primario: #025790;
+    --color-error: #cf2020;
+    --color-ok: #06a563;
+    --color-activo-oscuro: #e6da44;
+    --color-activo: rgb(156, 39, 176);
+    --color-activo-claro: #ffff54;
+    --fondo-oscuro: #1d1d1d;
+    --fondo-claro: #EEEEEE;
+    --disable-oscuro: #6E6E6E;
+    --disable-claro: #C4C4C4;
+    --letra-oscura: #000000;
+    --letra-clara: #ffffff;
+    --color-destacado: #ffb458;
+    --onsurface-color-helper: #5a5856;
+    --primary-color: #ffb458;
+
+}

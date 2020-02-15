@@ -1,0 +1,95 @@
+class MascotaDato{
+
+    private var id: Int
+
+    private var nombre: String
+
+    private var FN: String
+
+    private var imagen: String
+
+    private var tipo:String
+
+
+
+
+
+class TipoDato{ Camino Felino Otros
+
+    var codigo: String
+
+
+    var nombre: String
+
+
+
+
+
+class HCDato{ Historia Clinica
+
+    private var id: Int
+
+    private var idmascota: Int
+
+    private var descripcion: String
+
+    private var fecha: String
+
+
+    private var realizado:String
+
+
+
+class VacunaAgendaDato{ H c Vacunas
+
+    private var id: Int
+
+    private var idmascota: Int
+
+    private var idvacuna: Int
+
+    private var fecha: String
+
+
+    private var realizado:String
+
+
+
+
+
+class VacunaDato{ Las Vacunas
+
+    var codigo: Int
+
+
+    var nombre: String
+
+
+
+
+
+class VacunaCalendarioDato{
+
+    private var edad: String
+
+    private var cachorro: String
+
+    private var vacuna: String
+
+    private var obligatorio: String
+
+
+    private var enfermedad: String
+
+
+
+class TitularDato{
+
+    var id: Int
+
+    var nombre: String
+
+    var documento: Int
+
+
+    var cobertura: Int

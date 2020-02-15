@@ -1,0 +1,9 @@
+@font-face {
+font-family: 'proximanova';
+font-style: normal;
+font-weight: normal;
+src: url('../assets/fonts/proximanova.woff') format('woff');
+}
+html{
+    font-family: 'proximanova';
+}
