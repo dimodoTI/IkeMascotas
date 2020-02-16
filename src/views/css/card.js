@@ -7,7 +7,7 @@ export const card = css `
     box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
     border: 0;
     border-radius: 6px;
-    background-color:rgb(0,0,0,.5);
+    background-color:rgb(0,0,0,.7);
     scrollbar-width: thin;
     scrollbar-color: #999 transparent;
     box-sizing: border-box;

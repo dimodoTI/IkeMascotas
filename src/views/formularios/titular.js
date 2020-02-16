@@ -54,9 +54,7 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
         return css `
         ${card}
         ${boton}
-        
-
-       
+             
         :host{
             position:absolute;
             display:grid;
@@ -64,14 +62,29 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
             grid-gap:1rem;
             align-items:center;
             justify-items:center;
+            transition: all .5s ease-in-out;
+            padding-bottom:1rem;
+           
+           
+       
+        }
+        :host(:not([media-size="small"])){
+            width:30%;
+          
             left:50%;
             top:50%;
             transform:translate(-50%,-50%);
-            transition: all .5s ease-in-out;
-            padding-bottom:1rem;
-            width:30%
+
+        }
+        :host([media-size="small"]){
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            padding-left:3rem;
            
-       
+
+
         }
         :host([oculto]){
             left:-50rem
@@ -162,7 +175,11 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
             oculto: {
                 type: Boolean,
                 reflect: true
-            }
+            },
+            mediaSize: {
+                type: String,
+                reflect: true
+            },
 
         }
     }

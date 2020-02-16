@@ -87,7 +87,7 @@ export class viewManager extends connect(store, MEDIA_CHANGE)(LitElement) {
 
         </div>
         <hc2-spinner  type="2"></hc2-spinner>
-        <app-titular></app-titular>
+        <app-titular media-size="${this.mediaSize}"></app-titular>
         <lista-mascotas></lista-mascotas>
         <lista-hc></lista-hc>
         <lista-agenda></lista-agenda>
