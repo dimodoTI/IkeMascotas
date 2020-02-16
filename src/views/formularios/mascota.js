@@ -48,6 +48,7 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
         super();
         this.oculto = true
         this.item = {}
+        this.editando = false
 
     }
 
@@ -66,17 +67,36 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
             grid-gap:1rem;
             align-items:center;
             justify-items:center;
-            
+            min-width:20rem;
+        }
+        
+        :host([media-size="small"]){
+            position:absolute;
+            top:-100vh;
+            left:0 ;
+            width:100%;
+            height:100%;           
+            background-color:var(--color-formulario);
+            padding:.5rem;
+            transition:all .5s
+        }
+        :host([media-size="small"][editando]){
            
+            top:0;
+           
+        }
+
+        #cerrar{
+            justify-self:end
+        }
+        :host(:not([media-size="small"])) #cerrar{
+            display:none
+        }
        
-        }
-        :host([oculto]){
-            left:-50rem
-        }
         #titulo{
             display:grid;
-            min-width:20rem;
-            grid-template-columns:1fr;
+            width:100%;
+            grid-template-columns:1fr auto;
             justify-items:center;
             grid-gap:.5rem;
             color:white;
@@ -120,6 +140,7 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
         return html `
             <div id="titulo">
                 <div>MI MASCOTA</div>
+                <div class="boton" id="cerrar" @click="${this.cerrar}">${CANCELAR}</div>
                 
             </div>
             <div id ="cuerpo">
@@ -157,7 +178,8 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
     }
 
     cerrar() {
-        this.oculto = true
+        //funciona solo para media samll
+        this.shadowRoot.host.offsetParent.editando = false
     }
     salvar() {
 
@@ -171,7 +193,8 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
         this.update()
         if (store.getState().mascotas.currentTask == "ADD") store.dispatch(addMascota(this.item))
         if (store.getState().mascotas.currentTask == "UPDATE") store.dispatch(updateMascota(this.item))
-        this.oculto = true
+        this.cerrar()
+
     }
     static get properties() {
         return {
@@ -182,7 +205,17 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
             agregando: {
                 type: Boolean,
                 reflect: true
-            }
+            },
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: 'media-size'
+
+            },
+            editando: {
+                type: Boolean,
+                reflect: true
+            },
 
         }
     }

@@ -88,9 +88,9 @@ export class viewManager extends connect(store, MEDIA_CHANGE)(LitElement) {
         </div>
         <hc2-spinner  type="2"></hc2-spinner>
         <app-titular media-size="${this.mediaSize}"></app-titular>
-        <lista-mascotas></lista-mascotas>
-        <lista-hc></lista-hc>
-        <lista-agenda></lista-agenda>
+        <lista-mascotas media-size="${this.mediaSize}"></lista-mascotas>
+        <lista-hc  media-size="${this.mediaSize}"></lista-hc>
+        <lista-agenda  media-size="${this.mediaSize}"></lista-agenda>
         <lista-calendario></lista-calendario>
         `
     }
@@ -98,6 +98,7 @@ export class viewManager extends connect(store, MEDIA_CHANGE)(LitElement) {
     stateChanged(state, name) {
         if (name == MEDIA_CHANGE) {
             this.mediaSize = state.ui.media.size
+            this.update()
         }
 
     }

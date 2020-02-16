@@ -68,17 +68,38 @@ export class appHC extends connect(store, HC_SELECCIONADA, OPCION_SELECCIONADA)(
             grid-gap:1rem;
             align-items:center;
             justify-items:center;
-            
+            min-width:20rem;
+        }
+        
+        :host([media-size="small"]){
+            position:absolute;
+            top:-100vh;
+            left:0 ;
+            width:100%;
+            height:100%;           
+            background-color:var(--color-formulario);
+            padding:.5rem;
+            transition:all .5s
+        }
+        :host([media-size="small"][editando]){
            
-       
+            top:0;
+           
         }
         :host([oculto]){
             left:-50rem
         }
+        #cerrar{
+            justify-self:end
+        }
+        :host(:not([media-size="small"])) #cerrar{
+            display:none
+        }
+       
         #titulo{
             display:grid;
-            min-width:20rem;
-            grid-template-columns:1fr;
+            width:100%;
+            grid-template-rows:1fr auto;
             justify-items:center;
             grid-gap:.5rem;
             color:white;
@@ -87,6 +108,7 @@ export class appHC extends connect(store, HC_SELECCIONADA, OPCION_SELECCIONADA)(
             align-items:center;
             margin:.5rem
         }
+        
         #cuerpo{
             display:grid;
             grid-auto-flow:row;
@@ -118,7 +140,7 @@ export class appHC extends connect(store, HC_SELECCIONADA, OPCION_SELECCIONADA)(
         return html `
             <div id="titulo">
                 <div>ESTUDIO</div>
-                
+                <div class="boton" id="cerrar" @click="${this.cerrar}">${CANCELAR}</div>
             </div>
             <div id ="cuerpo">
                
@@ -156,7 +178,8 @@ export class appHC extends connect(store, HC_SELECCIONADA, OPCION_SELECCIONADA)(
     }
 
     cerrar() {
-        this.oculto = true
+        //funciona solo para media samll
+        this.shadowRoot.host.offsetParent.editando = false
     }
     salvar() {
 
@@ -170,8 +193,7 @@ export class appHC extends connect(store, HC_SELECCIONADA, OPCION_SELECCIONADA)(
         this.update()
         if (store.getState().hc.currentTask == "ADD") store.dispatch(addHC(this.item))
         if (store.getState().hc.currentTask == "UPDATE") store.dispatch(updateHC(this.item))
-
-        this.oculto = true
+        this.cerrar()
     }
     static get properties() {
         return {
@@ -182,7 +204,17 @@ export class appHC extends connect(store, HC_SELECCIONADA, OPCION_SELECCIONADA)(
             agregando: {
                 type: Boolean,
                 reflect: true
-            }
+            },
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: 'media-size'
+
+            },
+            editando: {
+                type: Boolean,
+                reflect: true
+            },
 
         }
     }

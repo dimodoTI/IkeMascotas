@@ -68,12 +68,32 @@ export class appAgenda extends connect(store, AGENDA_SELECCIONADA, OPCION_SELECC
             grid-gap:1rem;
             align-items:center;
             justify-items:center;
-            
+            min-width:20rem;
+        }
+        
+        :host([media-size="small"]){
+            position:absolute;
+            top:-100vh;
+            left:0 ;
+            width:100%;
+            height:100%;           
+            background-color:var(--color-formulario);
+            padding:.5rem;
+            transition:all .5s
+        }
+        :host([media-size="small"][editando]){
            
-       
+            top:0;
+           
         }
         :host([oculto]){
             left:-50rem
+        }
+        #cerrar{
+            justify-self:end
+        }
+        :host(:not([media-size="small"])) #cerrar{
+            display:none
         }
         #titulo{
             display:grid;
@@ -165,7 +185,8 @@ export class appAgenda extends connect(store, AGENDA_SELECCIONADA, OPCION_SELECC
     }
 
     cerrar() {
-        this.oculto = true
+        //funciona solo para media samll
+        this.shadowRoot.host.offsetParent.editando = false
     }
     salvar() {
 
@@ -180,7 +201,7 @@ export class appAgenda extends connect(store, AGENDA_SELECCIONADA, OPCION_SELECC
         if (store.getState().agenda.currentTask == "ADD") store.dispatch(addAgenda(this.item))
         if (store.getState().agenda.currentTask == "UPDATE") store.dispatch(updateAgenda(this.item))
 
-        this.oculto = true
+        this.cerrar()
     }
     static get properties() {
         return {
@@ -191,7 +212,17 @@ export class appAgenda extends connect(store, AGENDA_SELECCIONADA, OPCION_SELECC
             agregando: {
                 type: Boolean,
                 reflect: true
-            }
+            },
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: 'media-size'
+
+            },
+            editando: {
+                type: Boolean,
+                reflect: true
+            },
 
         }
     }

@@ -130,11 +130,13 @@ export class appMenu extends connect(store)(LitElement) {
         return {
             mediaSize: {
                 type: String,
-                reflect: true
+                reflect: true,
+                attribute: 'media-size'
             },
             open: {
                 type: Boolean,
                 reflect: true
+
             }
 
         }

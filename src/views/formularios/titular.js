@@ -81,8 +81,8 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
             left:0;
             width:100%;
             height:100%;
-            padding-left:3rem;
            
+            background-color:var(--color-titular)
 
 
         }
@@ -178,7 +178,8 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
             },
             mediaSize: {
                 type: String,
-                reflect: true
+                reflect: true,
+                attribute: 'media-size'
             },
 
         }

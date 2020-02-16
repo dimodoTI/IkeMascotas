@@ -58,6 +58,8 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
         super();
         this.oculto = true
         this.items = []
+        this.editando = false
+
     }
 
     static get styles() {
@@ -71,16 +73,30 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             grid-auto-flow:rows;
             grid-gap:1rem;
             align-items:center;
-            justify-items:center;
+            justify-items:center;            
+            transition: all .5s ease-in-out;
+            padding-bottom:1rem;                   
+       
+        }
+        
+        :host([media-size="small"][editando]) #lista{
+            display:none
+        }
+        
+        :host(:not([media-size="small"])){
+            width:70%;
+            height:70%;    
             left:50%;
             top:50%;
             transform:translate(-50%,-50%);
-            transition: all .5s ease-in-out;
-            padding-bottom:1rem;
-            width:70%;
-            height:70%
-           
-       
+        }
+        :host([media-size="small"]){
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;           
+            background-color:var(--color-lista);
+            padding:.5rem
         }
         :host([oculto]){
             left:-50rem
@@ -102,6 +118,15 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             grid-template-columns:2fr 1fr;
             grid-gap:.5rem;
             padding:.5rem;
+        }
+        :host([media-size="small"]) #cuerpo{           
+            grid-template-columns: 1fr;
+            width:100%;
+            padding:0
+            
+        }
+        :host([media-size="small"]) #fecha{
+           display:none
         }
         #lista{
             display:grid;
@@ -145,8 +170,9 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
         }
         .emptyRow{
             display:grid;
+           
             grid-auto-flow:row;
-            
+           
             background-color:rgba(0,0,0,.5);
             height:3rem;
             
@@ -175,7 +201,7 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             <div id="lista">
                 ${this.getRow()}
             </div>
-            <app-mascota></app-mascota>
+            <app-mascota id="formulario" media-size="${this.mediaSize}" ?editando="${this.editando}"></app-mascota>
         </div>
         <div class="botonera">
             <div class="boton" @click="${this.agregar}">${LISTA_ADD} NUEVA MASCOTA</div>
@@ -192,7 +218,7 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
                     <div class="datos">
                         <div class="nombre">${item.nombre}</div>
                         <div class="otros">
-                            <div>${new Date(item.FN).toDateString()}</div>
+                            <div id="fecha">${new Date(item.FN).toDateString()}</div>
                             <div>(${item.tipo})</div>
                         </div>
                         
@@ -242,24 +268,35 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
 
     agregar(e) {
         store.dispatch(newItem())
+        this.editando = true;
 
     }
     seleccionar(e) {
 
         store.dispatch(select(e.currentTarget.item))
+        this.editando = true;
 
     }
     cerrar() {
         this.oculto = true
         store.dispatch(selectMenu(""))
     }
-    salvar() {
-        store.dispatch(update(this.shadowRoot.querySelector("#nombre").value, this.shadowRoot.querySelector("#documento").value))
-        this.oculto = true
-    }
+    /*  salvar() {
+         store.dispatch(update(this.shadowRoot.querySelector("#nombre").value, this.shadowRoot.querySelector("#documento").value))
+         this.oculto = true
+     } */
     static get properties() {
         return {
             oculto: {
+                type: Boolean,
+                reflect: true
+            },
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: 'media-size'
+            },
+            editando: {
                 type: Boolean,
                 reflect: true
             }

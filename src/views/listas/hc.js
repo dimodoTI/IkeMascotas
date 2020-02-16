@@ -70,16 +70,30 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
             grid-auto-flow:rows;
             grid-gap:1rem;
             align-items:center;
-            justify-items:center;
+            justify-items:center;            
+            transition: all .5s ease-in-out;
+            padding-bottom:1rem;         
+           
+       
+        }
+        :host([media-size="small"][editando]) #lista{
+            display:none
+        }
+        
+        :host(:not([media-size="small"])){
+            width:70%;
+            height:70%;    
             left:50%;
             top:50%;
             transform:translate(-50%,-50%);
-            transition: all .5s ease-in-out;
-            padding-bottom:1rem;
-            width:70%;
-            height:70%
-           
-       
+        }
+        :host([media-size="small"]){
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;           
+            background-color:var(--color-lista);
+            padding:.5rem
         }
         :host([oculto]){
             left:-50rem
@@ -101,6 +115,15 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
             grid-template-columns:2fr 1fr;
             grid-gap:.5rem;
             padding:.5rem;
+        }
+        :host([media-size="small"]) #cuerpo{           
+            grid-template-columns: 1fr;
+            width:100%;
+            padding:0
+            
+        }
+        :host([media-size="small"]) #fecha{
+           display:none
         }
         #lista{
             display:grid;
@@ -159,6 +182,16 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
           
    
         }
+        .subtit{
+            font-weight:bold;
+            display:grid;
+            grid-auto-flow:column;
+            grid-gap:1rem;
+            align-items:center;
+        }
+        :host([media-size="small"]) .subtit{
+            grid-auto-flow:row;
+        }
 
 
         
@@ -167,17 +200,17 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
     render() {
         return html `
         <div id="titulo">
-            <div style="font-weight:bold;display:grid;grid-template-columns:1fr auto;grid-gap:1rem;align-items:center;">
+            <div class="subtit">
                 <div>HISTORIA CLINICA DE</div>
                 <combo-mascota></combo-mascota>
             </div>       
-            <div class="boton" @click="${this.cerrar}">${CANCELAR}</div>
+            <div class="boton" @click="${this.cerrar}" style="align-self:start">${CANCELAR}</div>
         </div>
         <div id="cuerpo">
             <div id="lista">
                 ${this.getRow()}
             </div>
-            <app-hc></app-hc>
+            <app-hc id="formulario" media-size="${this.mediaSize}" ?editando="${this.editando}"></app-hc>
         </div>
         <div class="botonera">
             <div class="boton" @click="${this.agregar}">${LISTA_ADD} NUEVO ESTUDIO</div>
@@ -243,10 +276,12 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
 
     agregar(e) {
         store.dispatch(newItem())
+        this.editando = true;
     }
     seleccionar(e) {
 
         store.dispatch(select(e.currentTarget.item))
+        this.editando = true;
 
     }
     cerrar() {
@@ -257,6 +292,15 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
     static get properties() {
         return {
             oculto: {
+                type: Boolean,
+                reflect: true
+            },
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: 'media-size'
+            },
+            editando: {
                 type: Boolean,
                 reflect: true
             }
