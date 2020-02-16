@@ -89,7 +89,7 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             left:0;
             width:100%;
             height:100%;           
-            background-color:var(--color-lista);
+            background-color:var(--color-calendario);
             padding:.5rem;
             align-content: start;
         }
