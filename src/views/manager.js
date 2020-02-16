@@ -34,7 +34,8 @@ import {
     listaCalendario
 } from "./listas/calendario"
 
-export class viewManager extends connect(store)(LitElement) {
+const MEDIA_CHANGE = "ui.media.timeStamp"
+export class viewManager extends connect(store, MEDIA_CHANGE)(LitElement) {
     constructor() {
         super();
         this.current = "IKE-MAscotas";
@@ -79,9 +80,10 @@ export class viewManager extends connect(store)(LitElement) {
     }
     render() {
         return html `
-        <app-menu id="menu"></app-menu>
+        <app-menu id="menu" media-size="${this.mediaSize}"></app-menu>
+       
         <div id="cuerpo">
-
+           
 
         </div>
         <hc2-spinner  type="2"></hc2-spinner>
@@ -94,12 +96,18 @@ export class viewManager extends connect(store)(LitElement) {
     }
 
     stateChanged(state, name) {
+        if (name == MEDIA_CHANGE) {
+            this.mediaSize = state.ui.media.size
+        }
 
     }
 
     static get properties() {
         return {
-
+            mediaSize: {
+                type: String,
+                reflect: true
+            }
         }
     }
 }

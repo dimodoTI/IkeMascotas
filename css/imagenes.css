@@ -1,8 +1,10 @@
-view-manager{
+view-manager {
     background-image: url('../assets/images/fondo.jpg');
     background-size: 100vw 100vh;
- 
+
     background-position: center;
-  
+    background-size: cover;
+    position: relative;
+
 
 }

@@ -3,14 +3,22 @@ import {
     HIDE_SPINNER,
     SHOW_ERROR,
     HIDE_ERROR,
-    SELECT_MENU
+    SELECT_MENU,
+    SET_MEDIA
 } from "../actions/ui";
 
 const initialState = {
     loading: 0,
     errorTimestamp: false,
     errorMessages: null,
-    opcionSeleccionada:{option:"",timeStamp:null}
+    opcionSeleccionada: {
+        option: "",
+        timeStamp: null
+    },
+    media: {
+        size: "large",
+        timeStamp: null
+    }
 };
 
 export const reducer = (state = initialState, action) => {
@@ -35,8 +43,12 @@ export const reducer = (state = initialState, action) => {
             break;
         case SELECT_MENU:
             newState.opcionSeleccionada.option = action.option
-            newState.opcionSeleccionada.timeStamp=(new Date()).getTime()
+            newState.opcionSeleccionada.timeStamp = (new Date()).getTime()
             break;
+        case SET_MEDIA:
+            newState.media.size = action.size
+            newState.media.timeStamp = (new Date()).getTime()
+            break
 
     }
     return newState;
