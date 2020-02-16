@@ -63,24 +63,37 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
         return css `
         ${card}
         ${boton}
-      
         :host{
             position:absolute;
             display:grid;
             grid-auto-flow:rows;
             grid-gap:1rem;
             align-items:center;
-            justify-items:center;
-            left:50%;
-            top:50%;
-            transform:translate(-50%,-50%);
+            justify-items:center;            
             transition: all .5s ease-in-out;
-            padding-bottom:1rem;
-            width:70%;
-            height:70%
+                 
            
        
         }
+        
+        
+        :host(:not([media-size="small"])){
+            width:70%;
+            height:70%;    
+            left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+        }
+        :host([media-size="small"]){
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;           
+            background-color:var(--color-lista);
+            padding:.5rem;
+            align-content: start;
+        }
+        
         :host([oculto]){
             left:-50rem
         }
@@ -109,6 +122,12 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             height:50vh;
             overflow-y:auto;
             align-content:start;
+            scrollbar-width: thin;
+            scrollbar-color: #999 transparent;
+            box-sizing: border-box;
+        }
+        :host([media-size="small"]) #lista{
+            height:80vh;
         }
         .row{
             display:grid;
@@ -137,6 +156,46 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
         }
         
 
+        #lista::-webkit-scrollbar-track
+        {
+            border-radius: .3rem;
+            background-color: transparent;
+        }
+        #lista::-webkit-scrollbar
+        {
+            width:.4rem;
+        }
+        #lista::-webkit-scrollbar-thumb
+        {
+            border-radius: .3rem;
+            background-color: #999
+        }
+
+        .smallRow{
+            display:grid;
+            grid-auto-flow:row;
+            grid-gap:.5rem;
+            
+            background-color:rgba(0,0,0,.5);
+            min-height:12rem;
+            padding:.3rem;
+            color:white;
+            align-items:center;
+            
+        }
+        :host([media-size="small"]) .cabeceraRow{
+            display:none
+        }
+        .valor{
+            display:grid;
+            grid-template-columns:2fr 3fr;
+            grid-gap:.3rem
+        }
+        .label{
+            color:var(--primary-color);
+            font-size:.8rem
+        }
+
         
         `
     }
@@ -153,7 +212,7 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
                         <div class="edad">Edad</div>
                         
                         <div class="obligatorio">Obligatoriedad</div>
-                        <div class="periodo">Perido</div>
+                        <div class="periodo">Periodo</div>
 
                         <div class="vacuna">Vacuna</div>
                         <div class="enfermedad">Enfermedades</div>
@@ -173,7 +232,26 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
 
     getRow() {
 
-        return this.items.map(item => html `
+        if (this.mediaSize == "small") {
+            return this.items.map(item => html `
+                <div class="smallRow">
+             
+                        <div class="valor"><div class="label">Cachorro:</div>${item.cachorro}</div>
+                        <div class="valor"><div class="label">Edad:</div>${item.edad}</div>
+                        
+                        <div class="valor"><div class="label">Obligatoriedad:</div>${item.obligatorio}</div>
+                        <div class="valor"><div class="label">Periodo:</div>${item.periodo}</div>
+
+                        <div class="valor"><div class="label">Vacuna:</div>${item.vacuna}</div>
+                        <div class="valor"><div class="label">Enfermedades:</div>${item.enfermedad}</div>
+                                              
+                                     
+                    
+                </div>
+                `)
+        } else {
+
+            return this.items.map(item => html `
                 <div class="row">
              
                         <div class="cachorro">${item.cachorro}</div>
@@ -189,6 +267,7 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
                     
                 </div>
                 `)
+        }
 
     }
 
@@ -286,7 +365,13 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             oculto: {
                 type: Boolean,
                 reflect: true
-            }
+            },
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: 'media-size'
+
+            },
 
         }
     }

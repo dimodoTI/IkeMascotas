@@ -91,7 +91,7 @@ export class viewManager extends connect(store, MEDIA_CHANGE)(LitElement) {
         <lista-mascotas media-size="${this.mediaSize}"></lista-mascotas>
         <lista-hc  media-size="${this.mediaSize}"></lista-hc>
         <lista-agenda  media-size="${this.mediaSize}"></lista-agenda>
-        <lista-calendario></lista-calendario>
+        <lista-calendario media-size="${this.mediaSize}"></lista-calendario>
         `
     }
 
