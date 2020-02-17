@@ -201,7 +201,7 @@ export class listaAgenda extends connect(store, AGENDA, OPCION_SELECCIONADA, CUR
                 <div>AGENDA DE VACUNACION DE</div>
                 <combo-mascota></combo-mascota>
             </div>       
-            <div class="boton" @click="${this.cerrar}">${CANCELAR}</div>
+            <div style="align-self:start" lass="boton" @click="${this.cerrar}">${CANCELAR}</div>
         </div>
         <div id="cuerpo">
             <div id="lista">

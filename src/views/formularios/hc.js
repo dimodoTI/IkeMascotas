@@ -99,7 +99,7 @@ export class appHC extends connect(store, HC_SELECCIONADA, OPCION_SELECCIONADA)(
         #titulo{
             display:grid;
             width:100%;
-            grid-template-rows:1fr auto;
+            grid-template-columns:1fr auto;
             justify-items:center;
             grid-gap:.5rem;
             color:white;

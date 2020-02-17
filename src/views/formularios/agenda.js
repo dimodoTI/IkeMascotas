@@ -97,8 +97,8 @@ export class appAgenda extends connect(store, AGENDA_SELECCIONADA, OPCION_SELECC
         }
         #titulo{
             display:grid;
-            min-width:20rem;
-            grid-template-columns:1fr;
+            width:100%;
+            grid-template-columns:1fr auto;
             justify-items:center;
             grid-gap:.5rem;
             color:white;
@@ -138,7 +138,7 @@ export class appAgenda extends connect(store, AGENDA_SELECCIONADA, OPCION_SELECC
         return html `
             <div id="titulo">
                 <div>VACUNA</div>
-                
+                <div class="boton" id="cerrar" @click="${this.cerrar}">${CANCELAR}</div>
             </div>
             <div id ="cuerpo">
                 <div class="select" style="width:15rem;height:3rem"> 
