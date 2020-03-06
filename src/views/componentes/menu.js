@@ -15,7 +15,8 @@ import {
 } from "../css/boton"
 
 import {
-    selectMenu
+    selectMenu,
+    toggleMenu
 } from "../../redux/actions/ui"
 
 import {
@@ -25,7 +26,9 @@ import {
     CAPAS,
     MASCOTA,
     LEFT,
-    RIGHT
+    RIGHT,
+    MENU,
+    NARANJA
 } from "../../../assets/icons/icons"
 
 export class appMenu extends connect(store)(LitElement) {
@@ -42,13 +45,13 @@ export class appMenu extends connect(store)(LitElement) {
             display:grid;
             grid-auto-flow:column;
             grid-gap:1rem;
-            
-            background-color:rgb(0,0,0,.3);
             align-items:center;
             justify-items:center;
-            transition: width .5s;
-            overflow-x:hidden
-        
+            transition: all .5s;
+            overflow-x:hidden;
+            font-size:1.2rem;
+            font-weight:bold;
+         
         }
         :host([media-size="medium"]) .open,:host([media-size="large"]) .open{
             display:none
@@ -61,65 +64,102 @@ export class appMenu extends connect(store)(LitElement) {
         }
         
         :host([media-size="small"]) {
+            position:absolute;
+            grid-gap:2rem;
+            left:100vw;
             grid-auto-flow:row;
             justify-items: start;
-            padding: .5rem;
+            align-items:start;
+            align-content:start;
             height: 100vh;
-            width: 2rem;
+            width:75vw;
+            font-size:.85rem;
+            font-weight:bold;
+            background-color:white;
+            
         }
-        :host([media-size="small"]:not([open])) .label{
+       /*  :host([media-size="small"]:not([open])) .label{
+            display:none
+        } */
+        :host([media-size="small"][open]) {         
+            left:25vw;
+        }
+
+        :host(:not([media-size="small"])) .botonMenu{
             display:none
         }
-        :host([media-size="small"][open]) {         
-            width: 70vw;
+
+        .label{
+            color:#333333;
+            cursor:pointer
         }
-       
-       
+        :host([media-size="small"]) .label{
+            margin-left:1rem
+        }
+      
+        .menuItem:hover .label{
+            color:var(--orange);
+            
+        }
+        .botonMenu{
+            stroke:var(--orange);
+            fill:var(--orange);
+            color:var(--orange);
+            display:grid;
+            grid-auto-flow:column;
+            align-items:center;
+            font-size:1.5rem;
+            background-color:#f4f3f1;
+            justify-self:stretch;
+            align-self:stretch;
+            padding:1rem
+
+        }
+        .separador{
+            
+            border-bottom:1px solid #e3e3e3;
+        }
         
         `
     }
     render() {
         return html `
 
-           
-        
-            <div class="boton" @click="${this.selectMenu}" .value="${"TITULAR"}">
-                <div>${TRABAJADOR}</div>
-                <div class="label">TITULAR</div>
-            </div>
-            <div class="boton" @click="${this.selectMenu}" .value="${"MASCOTAS"}">
-                <div>${MASCOTA}</div>
-                <div class="label">MASCOTAS</div>
-            </div>
-            <div class="boton" @click="${this.selectMenu}" .value="${"CALENDARIO VACUNACION"}">
-                <div>${CAPAS}</div>
-                <div class="label">CALENDARIO VACUNACION</div>
-            </div>
-            <div class="boton" @click="${this.selectMenu}" .value="${"HISTORIA CLINICA"}">
-                <div>${HOSPITAL}</div>
-                <div class="label">HISTORIA CLINICA</div>
-            </div>
-            <div class="boton" @click="${this.selectMenu}" .value="${"AGENDA VACUNACION"}">
-                <div>${ALARMA}</div>
-                <div class="label">AGENDA VACUNACION</div>
-            </div>
-            <div class="boton open" @click="${this.toggle}">
-                <div>${this.open?LEFT:RIGHT}</div>
-                
+            <div class="botonMenu separador" @click="${this.toggle}">
+                <div>Naranja</div>
             </div>
             
+            <div class="menuItem" @click="${this.selectMenu}" .value="${"TITULAR"}">
+                <!-- <div>${TRABAJADOR}</div> -->
+                <div class="label">Titular</div>
+            </div>
+            <div class="menuItem" @click="${this.selectMenu}" .value="${"MASCOTAS"}">
+                <!-- <div>${MASCOTA}</div> -->
+                <div class="label">Mascotas</div>
+            </div>
+            <div class="menuItem" @click="${this.selectMenu}" .value="${"CALENDARIO VACUNACION"}">
+                <!-- <div>${CAPAS}</div> -->
+                <div class="label">Calendario Vacunación</div>
+            </div>
+            <div class="menuItem" @click="${this.selectMenu}" .value="${"HISTORIA CLINICA"}">
+                <!-- <div>${HOSPITAL}</div> -->
+                <div class="label">Historia Clínica</div>
+            </div>
+            <div class="menuItem" @click="${this.selectMenu}" .value="${"AGENDA VACUNACION"}">
+                <!-- <div>${ALARMA}</div> -->
+                <div class="label">Agenda Vacunacion</div>
+            </div>
            
-        
         `
     }
 
     selectMenu(e) {
-        this.open = false
+        store.dispatch(toggleMenu())
         store.dispatch(selectMenu(e.currentTarget.value))
     }
 
     toggle(e) {
-        this.open = !this.open
+        store.dispatch(toggleMenu())
     }
 
     stateChanged(state, name) {

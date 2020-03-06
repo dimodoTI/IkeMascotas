@@ -25,12 +25,8 @@ import {
     newItem as newAgenda
 } from "../../redux/actions/agenda"
 
-
-
-
 const MASCOTAS = "mascotas.timeStamp"
 const CURRENT_MASCOTA = "mascotas.currentTimeStamp"
-
 
 export class comboMascota extends connect(store, MASCOTAS, CURRENT_MASCOTA)(LitElement) {
     constructor() {
@@ -46,7 +42,6 @@ export class comboMascota extends connect(store, MASCOTAS, CURRENT_MASCOTA)(LitE
      
         ${select}
        
- 
         :host{
             
             display:grid;
@@ -55,15 +50,16 @@ export class comboMascota extends connect(store, MASCOTAS, CURRENT_MASCOTA)(LitE
             align-items:center;
             justify-items:center;
             
-           
-       
         }
         :host([oculto]){
             left:-50rem
         }
         
-        
-
+        select{
+            color:black;
+            background-color:white;
+            border-radius:0
+        }
         
         `
     }
@@ -80,7 +76,6 @@ export class comboMascota extends connect(store, MASCOTAS, CURRENT_MASCOTA)(LitE
             
         `
     }
-
 
     stateChanged(state, name) {
         if (name == MASCOTAS) {
@@ -112,13 +107,17 @@ export class comboMascota extends connect(store, MASCOTAS, CURRENT_MASCOTA)(LitE
         return this._value
     }
 
-
-
     static get properties() {
         return {
             oculto: {
                 type: Boolean,
                 reflect: true
+            },
+            mediaSize: {
+                type: String,
+                reflect: true,
+                attribute: 'media-size'
+
             }
 
         }

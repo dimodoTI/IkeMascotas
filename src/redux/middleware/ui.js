@@ -23,6 +23,11 @@ export const capture = ({
         large.addListener((e) => {
             if (e.matches) dispatch(setMedia("large"))
         })
+        if (small.matches) dispatch(setMedia("small"))
+        if (medium.matches) dispatch(setMedia("medium"))
+        if (large.matches) dispatch(setMedia("large"))
+
+
     }
 
 };

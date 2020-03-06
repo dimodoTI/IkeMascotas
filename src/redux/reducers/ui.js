@@ -4,7 +4,8 @@ import {
     SHOW_ERROR,
     HIDE_ERROR,
     SELECT_MENU,
-    SET_MEDIA
+    SET_MEDIA,
+    TOGGLE_MENU
 } from "../actions/ui";
 
 const initialState = {
@@ -18,7 +19,9 @@ const initialState = {
     media: {
         size: "large",
         timeStamp: null
-    }
+    },
+    menuOpen: true
+
 };
 
 export const reducer = (state = initialState, action) => {
@@ -48,7 +51,10 @@ export const reducer = (state = initialState, action) => {
         case SET_MEDIA:
             newState.media.size = action.size
             newState.media.timeStamp = (new Date()).getTime()
-            break
+            break;
+        case TOGGLE_MENU:
+            newState.menuOpen = !newState.menuOpen
+            break;
 
     }
     return newState;

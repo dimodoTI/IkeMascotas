@@ -1,5 +1,5 @@
 import {
-    css
+  css
 } from "lit-element"
 
 export const select = css `
@@ -40,7 +40,7 @@ select {
       padding:.2rem
   }
   select:focus {
-    border-bottom: 2px solid  var(--color-destacado);
+    border-bottom: 2px solid  var(--orange);
   }
   
   .select::after {
@@ -49,23 +49,23 @@ select {
     top: 0;
     right: 0;
     padding: 0 1em;
-    background: rgba(0, 0, 0, 0.5);;
+    background: transparent;
     cursor: pointer;
     pointer-events: none;
     -webkit-transition: .25s all ease;
     -o-transition: .25s all ease;
     transition: .25s all ease;
-    color:white
+    color:var(--orange)
   }
   
   .select:hover::after {
-    color: var(--color-destacado);
+    color: var(--orange);
   }
   .select label{
       position:absolute;
       top:-.6rem;
       left:.4rem;
-      color:var(--color-destacado);
+      color:var(--orange);
       font-size:.8rem
 
   }

@@ -1,0 +1,22 @@
+{
+  "short_name": "IKE Mascotas",
+  "name": "Cuidando la salud de tus masacotas",
+  "description": "Soluciones rapidas para tus mascotas",
+  "icons": [
+    {
+      "src": "ic_launcher.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "playstore-icon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ff8800",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#ff8800"
+}

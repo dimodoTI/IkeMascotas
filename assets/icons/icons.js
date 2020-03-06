@@ -45,3 +45,28 @@ export const LISTA_ADD = svg `<svg xmlns="http://www.w3.org/2000/svg" width="2re
 export const VERIFIED = svg `<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`
 export const REBOTAR = svg `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2rem" height="2rem" viewBox="0 0 24 24"><defs><path id="a" d="M24 24H0V0h24v24z"/></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"/></clipPath><path clip-path="url(#b)" d="M3 8.41l9 9 7-7V15h2V7h-8v2h4.59L12 14.59 4.41 7 3 8.41z"/></svg>`
 export const MASCOTA = svg `<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24"><circle cx="4.5" cy="9.5" r="2.5"/><circle cx="9" cy="5.5" r="2.5"/><circle cx="15" cy="5.5" r="2.5"/><circle cx="19.5" cy="9.5" r="2.5"/><path d="M17.34 14.86c-.87-1.02-1.6-1.89-2.48-2.91-.46-.54-1.05-1.08-1.75-1.32-.11-.04-.22-.07-.33-.09-.25-.04-.52-.04-.78-.04s-.53 0-.79.05c-.11.02-.22.05-.33.09-.7.24-1.28.78-1.75 1.32-.87 1.02-1.6 1.89-2.48 2.91-1.31 1.31-2.92 2.76-2.62 4.79.29 1.02 1.02 2.03 2.33 2.32.73.15 3.06-.44 5.54-.44h.18c2.48 0 4.81.58 5.54.44 1.31-.29 2.04-1.31 2.33-2.32.31-2.04-1.3-3.49-2.61-4.8z"/></svg>`
+export const TRASH = svg `<svg xmlns="http://www.w3.org/2000/svg" height="2rem" viewBox="0 0 24 24" width="2rem"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z"/></svg>`
+export const NARANJA = svg `<svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 48 48">
+<defs>
+  <linearGradient id="a" x1="12.811%" x2="94.4%" y1="43.597%" y2="57.648%">
+    <stop offset="0%" stop-color="#FF9E16" stop-opacity="0"/>
+    <stop offset="4%" stop-color="#FD9516" stop-opacity=".07"/>
+    <stop offset="17%" stop-color="#F67717" stop-opacity=".31"/>
+    <stop offset="30%" stop-color="#F05E18" stop-opacity=".52"/>
+    <stop offset="43%" stop-color="#EB4819" stop-opacity=".7"/>
+    <stop offset="57%" stop-color="#E73819" stop-opacity=".83"/>
+    <stop offset="69%" stop-color="#E42C1A" stop-opacity=".92"/>
+    <stop offset="82%" stop-color="#E3251A" stop-opacity=".98"/>
+    <stop offset="93%" stop-color="#E2231A"/>
+  </linearGradient>
+</defs>
+<g fill="none">
+  <path fill="#FF9E16" d="M0 39.333v-8.9c7.516-.009 13.606-5.996 13.614-13.384V4.667h9.053v12.382c0 12.286-10.168 22.284-22.667 22.284z"/>
+  <path fill="url(#a)" d="M0 39.333v-8.9c7.516-.009 13.606-5.996 13.614-13.384V4.667h9.053v12.382c0 12.286-10.168 22.284-22.667 22.284z"/>
+  <path fill="#FF5000" d="M47.657 1.78c.225.24.348.558.343.888A1.328 1.328 0 0 1 46.667 4a1.277 1.277 0 0 1-.942-.391 1.309 1.309 0 0 1-.391-.965c0-.372.162-.726.444-.97.24-.225.56-.347.889-.34.38-.006.742.158.99.445zm-1.763.191a1.044 1.044 0 0 0-.272.71c.008.292.133.568.348.765a1.046 1.046 0 0 0 1.742-.778 1.014 1.014 0 0 0-.356-.775 1.001 1.001 0 0 0-.71-.268.973.973 0 0 0-.75.346h-.002zm1.198.432c-.162-.178-.24-.217-.391-.217a.44.44 0 0 0-.331.139.469.469 0 0 0-.132.339.46.46 0 0 0 .136.341.44.44 0 0 0 .327.139.388.388 0 0 0 .177-.038c.078-.05.15-.11.214-.177l.245.218a1.493 1.493 0 0 1-.05.048.797.797 0 0 1-.583.25.761.761 0 0 1-.592-.26.753.753 0 0 1-.202-.533.788.788 0 0 1 .794-.79c.24.01.463.122.615.306l-.227.235z"/>
+  <path fill="#98252B" d="M39.479 47.993a4.518 4.518 0 0 1-3.977-2.36L13.88 6.653A4.494 4.494 0 0 1 14 2.15 4.525 4.525 0 0 1 17.977.002a4.523 4.523 0 0 1 3.853 2.357l21.622 38.987a4.492 4.492 0 0 1-.086 4.45A4.523 4.523 0 0 1 39.484 48l-.005-.007z"/>
+  <path fill="#FF5000" d="M39.667 48c-2.394 0-4.334-2.016-4.334-4.503V4.503c0-2.487 1.94-4.503 4.334-4.503C42.06 0 44 2.016 44 4.503v38.994C44 45.984 42.06 48 39.667 48z"/>
+</g>
+</svg>`
+
+export const MENU = svg `<svg xmlns="http://www.w3.org/2000/svg" height="2rem" viewBox="0 0 24 24" width="2rem"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>`

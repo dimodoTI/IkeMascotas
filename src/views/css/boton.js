@@ -3,6 +3,7 @@ import {
 } from "lit-element"
 
 export const boton = css `
+         
         .boton:hover {
      
            fill:var(--color-destacado);
@@ -17,7 +18,11 @@ export const boton = css `
            cursor:pointer;
            color:white;
            fill:white;
-           stroke:white
-           
+           stroke:white;
+           background-color:var(--orange);
+           border-radius:2rem;
+           padding:.5rem;
+           box-shadow: 0 3px 6px 0 var(--orange-5);
+
         }
 `

@@ -27,6 +27,9 @@ import {
     FOTO,
     HOSPITAL,
     ALARMA,
+    LEFT,
+    NARANJA,
+    MENU
 } from "../../../assets/icons/icons";
 import {
     select,
@@ -45,10 +48,9 @@ import {
     appMascota
 } from "../formularios/mascota"
 import {
-    selectMenu
+    selectMenu,
+    toggleMenu
 } from "../../redux/actions/ui";
-
-
 
 const OPCION_SELECCIONADA = "ui.opcionSeleccionada.timeStamp"
 
@@ -66,48 +68,61 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
         :host{
             position:absolute;
             display:grid;
-            grid-auto-flow:rows;
-            grid-gap:1rem;
+            grid-template-rows:auto auto 1fr;
             align-items:center;
-            justify-items:center;            
+            justify-items:center;
             transition: all .5s ease-in-out;
-                 
-           
-       
+            background-color:white;
+            color:black;
+            grid-gap:.5rem;    
+
         }
-        
-        
+        #status{
+            display:grid;
+            grid-auto-flow:column;
+            align-items:center;
+            background-color: white;
+            color:var(--primary-color);
+            fill:var(--primary-color);
+            stroke:var(--primary-color);
+            justify-self: stretch;
+            padding: .5rem;
+            border-bottom:1px solid #e3e3e3;
+            background-color:#f4f3f1
+        }
         :host(:not([media-size="small"])){
             width:70%;
-            height:70%;    
+            height:90%;    
             left:50%;
-            top:50%;
+            top:55%;
             transform:translate(-50%,-50%);
         }
+       
         :host([media-size="small"]){
             top:0;
             left:0;
             width:100%;
             height:100%;           
-            background-color:var(--color-calendario);
-            padding:.5rem;
-            align-content: start;
+            background-color:white;
+            padding:0;
+            grid-gap:0;
+            align-items:start
         }
-        
         :host([oculto]){
             left:-50rem
         }
         #titulo{
             display:grid;
             justify-self:stretch;
-            grid-template-columns: 1fr auto;
-            justify-items:center;
-            grid-gap:.5rem;
-            color:white;
-            stroke:white;
-            fill:white;
+            grid-template-columns: auto 1fr;
             align-items:center;
-            margin:.5rem
+            justify-items:start;
+            grid-gap:.5rem;
+            font-size:1.5rem;
+            margin:1rem;
+            background-color:white;
+            color:Black;
+          
         }
         #cuerpo{
             display:grid;
@@ -133,29 +148,22 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             display:grid;
             grid-gap:1rem;
             grid-template-columns:1fr 1fr 1fr 1fr 1fr 3fr;
-            background-color:rgba(0,0,0,.5);
             min-height:4rem;
             padding:.3rem;
-            color:white;
             align-items:center;
         
-           
         }
-
+      
         .cabeceraRow{
             display:grid;
             grid-gap:1rem;
             grid-template-columns:1fr 1fr 1fr 1fr 1fr 3fr;
-            background-color:rgba(0,0,0,.6);
-           
             padding:.3rem;
             color:var(--primary-color);
             align-items:center;
            
-           
         }
         
-
         #lista::-webkit-scrollbar-track
         {
             border-radius: .3rem;
@@ -175,13 +183,14 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             display:grid;
             grid-auto-flow:row;
             grid-gap:.5rem;
-            
-            background-color:rgba(0,0,0,.5);
+            box-shadow:var(--shadow-elevation-3-box);
             min-height:12rem;
             padding:.3rem;
-            color:white;
             align-items:center;
-            
+        }
+        :host([media-size="small"]) .smallRow{
+            background-color:white;
+            color:black
         }
         :host([media-size="small"]) .cabeceraRow{
             display:none
@@ -196,15 +205,19 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             font-size:.8rem
         }
 
-        
         `
     }
     render() {
         return html `
+
+       <div id="status" style="font-weight:bold"> 
+            <div>${NARANJA}</div>
+            <div style="justify-self:end" @click="${this.cerrar}">${MENU}</div>
+        </div>       
         <div id="titulo">
-            <div style="font-weight:bold">CALENDARIO DE VACUNACION</div>
-            <div class="boton" @click="${this.cerrar}">${CANCELAR}</div>
+            <div>Calendario de Vacunación</div>
         </div>
+        
         <div id="cuerpo">
             <div class="cabeceraRow">
              
@@ -217,8 +230,6 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
                         <div class="vacuna">Vacuna</div>
                         <div class="enfermedad">Enfermedades</div>
                                               
-                                     
-                    
             </div>
             <div id="lista">
                 ${this.getRow()}
@@ -226,7 +237,6 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             
         </div>
         
-            
         `
     }
 
@@ -245,8 +255,6 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
                         <div class="valor"><div class="label">Vacuna:</div>${item.vacuna}</div>
                         <div class="valor"><div class="label">Enfermedades:</div>${item.enfermedad}</div>
                                               
-                                     
-                    
                 </div>
                 `)
         } else {
@@ -263,14 +271,11 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
                         <div class="vacuna">${item.vacuna}</div>
                         <div class="enfermedad">${item.enfermedad}</div>
                                               
-                                     
-                    
                 </div>
                 `)
         }
 
     }
-
 
     stateChanged(state, name) {
         if (name == OPCION_SELECCIONADA) {
@@ -354,10 +359,9 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
 
     }
 
-
     cerrar() {
         this.oculto = true
-        store.dispatch(selectMenu(""))
+        store.dispatch(toggleMenu())
     }
 
     static get properties() {

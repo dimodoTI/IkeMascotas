@@ -6,5 +6,9 @@ view-manager {
     background-size: cover;
     position: relative;
 
+}
+
+view-manager[media-size="small"]{
+    background-image: url('../assets/images/fondo.png');
 
 }

@@ -22,11 +22,13 @@ import {
 
 import {
     CANCELAR,
-    ACEPTAR,
+    LEFT,
     LISTA_ADD,
-    FOTO,
+    TRASH,
     HOSPITAL,
     ALARMA,
+    NARANJA,
+    MENU,
 } from "../../../assets/icons/icons";
 import {
     select,
@@ -37,7 +39,8 @@ import {
     appHC
 } from "../formularios/hc"
 import {
-    selectMenu
+    selectMenu,
+    toggleMenu
 } from "../../redux/actions/ui";
 import {
     comboMascota
@@ -46,7 +49,6 @@ import {
 
     newItem as newAgenda
 } from "../../redux/actions/agenda"
-
 
 const HC = "hc.timeStamp"
 const OPCION_SELECCIONADA = "ui.opcionSeleccionada.timeStamp"
@@ -67,33 +69,50 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
         :host{
             position:absolute;
             display:grid;
-            grid-auto-flow:rows;
-            grid-gap:1rem;
+            grid-template-rows:auto auto 1fr auto;
             align-items:center;
-            justify-items:center;            
+            justify-items:center;
             transition: all .5s ease-in-out;
-            padding-bottom:1rem;         
+            background-color:white;
+            color:black;
+            grid-gap:.5rem;    
            
-       
         }
+        #status{
+            display:grid;
+            grid-auto-flow:column;
+            align-items:center;
+            background-color: white;
+            color:var(--primary-color);
+            fill:var(--primary-color);
+            stroke:var(--primary-color);
+            justify-self: stretch;
+            padding: .5rem;
+            border-bottom:1px solid #e3e3e3;
+            background-color:#f4f3f1
+        }
+        
         :host([media-size="small"][editando]) #lista{
             display:none
         }
         
         :host(:not([media-size="small"])){
             width:70%;
-            height:70%;    
+            height:90%;    
             left:50%;
-            top:50%;
+            top:55%;
             transform:translate(-50%,-50%);
         }
+       
         :host([media-size="small"]){
             top:0;
             left:0;
             width:100%;
             height:100%;           
-            background-color:var(--color-lista);
-            padding:.5rem
+            background-color:white;
+            padding:0;
+            grid-gap:0;
+            align-items:start
         }
         :host([oculto]){
             left:-50rem
@@ -101,20 +120,22 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
         #titulo{
             display:grid;
             justify-self:stretch;
-            grid-template-columns: 1fr auto;
-            justify-items:center;
-            grid-gap:.5rem;
-            color:white;
-            stroke:white;
-            fill:white;
+            grid-template-columns: auto 1fr;
             align-items:center;
-            margin:.5rem
+            justify-items:start;
+            grid-gap:.5rem;
+            font-size:1.5rem;
+            margin:1rem;
+            background-color:white;
+            color:Black;
+          
         }
+       
         #cuerpo{
             display:grid;
             grid-template-columns:2fr 1fr;
             grid-gap:.5rem;
-            padding:.5rem;
+            
         }
         :host([media-size="small"]) #cuerpo{           
             grid-template-columns: 1fr;
@@ -133,17 +154,23 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
             overflow-y:auto;
             align-content:start;
         }
+        :host([media-size="small"]) #lista{
+            padding:.3rem
+        }
+        :host([media-size="small"]) .row{
+            padding:0
+        }
         .row{
             display:grid;
             grid-gap:1rem;
             grid-template-columns:1fr  auto;
-            background-color:rgba(0,0,0,.5);
+            background-color:white;
+            box-shadow:var(--shadow-elevation-2-box);
             min-height:4rem;
             padding:.3rem;
-            color:white;
             align-items:center;
             cursor:pointer
-           
+
         }
         .row .foto svg{
             height:3rem;
@@ -151,12 +178,15 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
             stroke:white;          
            
         }
+        :host([media-size="small"]) .row .datos{
+            color:black
+        }
         .row .datos {
             display:grid;
             grid-auto-flow:row
         }
         .row .datos .nombre {
-           color:var(--color-destacado);
+           color:var(--orange);
            font-size:1.2rem;
            font-weight:bold
         }
@@ -168,19 +198,29 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
         .emptyRow{
             display:grid;
             grid-auto-flow:row;
-            
-            background-color:rgba(0,0,0,.5);
+            background-color:rgba(0,0,0,.1);
             height:3rem;
             
         }
-        
-        
-        #botonera{
+        :host([media-size="small"]) .emptyRow{
+          
+            background-color:rgba(0,0,0,.1);
+           
+        }
+        :host([media-size="small"]) .row{
+            background-color:white;
+            box-shadow:var(--shadow-elevation-3-box);
+            padding:.2rem
+        }
+        :host([media-size="small"]) .botonTarjeta{
+            align-self:start;
+         
+        }
+        .botonera{
             display:grid;
             grid-auto-flow:row;
+            padding:1rem;
             
-          
-   
         }
         .subtit{
             font-weight:bold;
@@ -188,24 +228,32 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
             grid-auto-flow:column;
             grid-gap:1rem;
             align-items:center;
+           
+            justify-self: stretch;
+            padding: .3rem;
         }
+       
         :host([media-size="small"]) .subtit{
-            grid-auto-flow:row;
+            
+            justify-items: start;
+           
         }
 
-
-        
         `
     }
     render() {
         return html `
+        <div id="status" style="font-weight:bold"> 
+            <div>${NARANJA}</div>
+            <div style="justify-self:end" @click="${this.cerrar}">${MENU}</div>
+        </div>       
         <div id="titulo">
-            <div class="subtit">
-                <div>HISTORIA CLINICA DE</div>
-                <combo-mascota></combo-mascota>
-            </div>       
-            <div class="boton" @click="${this.cerrar}" style="align-self:start">${CANCELAR}</div>
+            <div>Historia Clínica</div>
         </div>
+        <div class="subtit">
+            <combo-mascota .mediaSize="${this.mediaSize}"></combo-mascota>
+        </div>       
+            
         <div id="cuerpo">
             <div id="lista">
                 ${this.getRow()}
@@ -213,7 +261,7 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
             <app-hc id="formulario" media-size="${this.mediaSize}" ?editando="${this.editando}"></app-hc>
         </div>
         <div class="botonera">
-            <div class="boton" @click="${this.agregar}">${LISTA_ADD} NUEVO ESTUDIO</div>
+            <div class="boton" @click="${this.agregar}">Nuevo Estudio</div>
         </div>
             
         `
@@ -233,8 +281,7 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
                         
                     </div>                  
                     
-
-                    <div class="boton">${CANCELAR}</div>
+                    <div class="botonTarjeta">${TRASH}</div>
                 </div>
                 `)
         } else {
@@ -243,7 +290,6 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
             return listaVacia.map(item => html `
                 <div class="emptyRow">
 
-                   
                 </div>
                 `)
 
@@ -286,7 +332,7 @@ export class listaHC extends connect(store, HC, OPCION_SELECCIONADA, CURRENT_MAS
     }
     cerrar() {
         this.oculto = true
-        store.dispatch(selectMenu(""))
+        store.dispatch(toggleMenu())
     }
 
     static get properties() {

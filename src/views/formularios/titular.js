@@ -22,7 +22,10 @@ import {
 
 import {
     CANCELAR,
-    ACEPTAR
+    ACEPTAR,
+    LEFT,
+    NARANJA,
+    MENU
 } from "../../../assets/icons/icons";
 import {
     update
@@ -32,9 +35,9 @@ import {
     nanoInput
 } from "@brunomon/nano-input"
 import {
-    selectMenu
+    selectMenu,
+    toggleMenu
 } from "../../redux/actions/ui";
-
 
 const OPCION_SELECCIONADA = "ui.opcionSeleccionada.timeStamp"
 const TITULAR = "titular.timeStamp"
@@ -58,102 +61,98 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
         :host{
             position:absolute;
             display:grid;
-            grid-auto-flow:rows;
-            grid-gap:1rem;
+            grid-template-rows:auto auto 5fr 1fr 2fr auto;          
             align-items:center;
             justify-items:center;
             transition: all .5s ease-in-out;
             padding-bottom:1rem;
-           
-           
-       
+            background-color:white;
+            color:black;
+        }
+        #status{
+            display:grid;
+            grid-auto-flow:column;
+            align-items:center;
+            background-color: white;
+            color:var(--primary-color);
+            fill:var(--primary-color);
+            stroke:var(--primary-color);
+            justify-self: stretch;
+            padding: .5rem;
+            border-bottom:1px solid #e3e3e3;
+            background-color:#f4f3f1
         }
         :host(:not([media-size="small"])){
             width:30%;
-          
             left:50%;
             top:50%;
             transform:translate(-50%,-50%);
-
         }
+       
         :host([media-size="small"]){
             top:0;
             left:0;
             width:100%;
-            height:100%;
-           
-            background-color:var(--color-titular)
-
-
+            height:100%;         
         }
+
         :host([oculto]){
             left:-50rem
         }
         #titulo{
             display:grid;
             justify-self:stretch;
-            grid-template-columns:1fr auto;
-            justify-items:center;
-            grid-gap:.5rem;
-            color:white;
-            stroke:white;
-            fill:white;
+            grid-template-columns: auto 1fr;
             align-items:center;
-            margin:.5rem
+            justify-items:start;
+            grid-gap:.5rem;
+            font-size:1.5rem;
+            margin:1rem;
+            background-color:white;
+            color:Black;
+
         }
         #cuerpo{
             display:grid;
             grid-auto-flow:row;
-            grid-gap:.5rem
+            grid-gap:.5rem;
+            background-color:#f4f3f1
         }
         #botonera{
             display:grid;
-          
-   
-        }
-        #cartel{
-            color:white;
-            border:2px solid var(--color-destacado);
-            max-width:10rem;
-            padding:.3rem;
-            font-size:.8rem
-        }
-        a {
-            color:var(--color-destacado);
-            font-size: .8rem
         }
         nano-input {
-            color:white;
-            background-color:rgb(0,0,0,.3);
-            border-radius:4px
-        }
-        
-
-        
+            color:black;
+            background-color:white;
+            border-radius:0;
+        }        
         `
     }
     render() {
         return html `
+            <div id="status">
+                <div>${NARANJA}</div>
+                <div style="justify-self:end" @click="${this.cerrar}">${MENU}</div>
+            </div>     
             <div id="titulo">
-                <div style="font-weight:bold">MIS DATOS</div>
-                <div class="boton" @click="${this.cerrar}">${CANCELAR}</div>
+                <!-- <div class="boton botonBlanco" @click="${this.cerrar}">${LEFT}</div> -->
+                <div>Mis Datos</div>
             </div>
             <div id ="cuerpo">
                 <nano-input style="width:15rem" id="nombre" type="text" label="Apellido y Nombre" .value="${this.item.nombre}"></nano-input>
                 <nano-input style="width:15rem" id="documento" type="number" label="Numero de Documento" no-spinner .value="${this.item.documento}"></nano-input>              
             </div>  
-            <a href="#">Politica de Privacidad</a>
+          <!--   <a href="#">Politica de Privacidad</a>
             <div id="cartel">
                 Por favor comuniquese con Iké Asistencia para regularizar su situación
             
-            </div>
+            </div> -->
             <div id="botonera" class="boton" @click="${this.salvar}">
-                <div>${ACEPTAR}</div>
-                <div>ACEPTAR</div>
+                <!-- <div>${ACEPTAR}</div> -->
+                <div>Aceptar</div>
             </div>  
         `
     }
-
 
     stateChanged(state, name) {
         if (name == TITULAR) this.item = state.titular.entity
@@ -163,8 +162,7 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
 
     cerrar() {
         this.oculto = true
-        store.dispatch(selectMenu(""))
-
+        store.dispatch(toggleMenu())
     }
     salvar() {
         store.dispatch(update(this.shadowRoot.querySelector("#nombre").value, this.shadowRoot.querySelector("#documento").value))
@@ -180,8 +178,7 @@ export class appTitular extends connect(store, OPCION_SELECCIONADA, TITULAR)(Lit
                 type: String,
                 reflect: true,
                 attribute: 'media-size'
-            },
-
+            }
         }
     }
 }

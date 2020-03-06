@@ -5,8 +5,7 @@ export const HIDE_ERROR = "[ui] hide error";
 export const SELECT_MENU = "[ui] seelct menu";
 export const CAPTURE_MEDIA = "[ui] capture media"
 export const SET_MEDIA = "[ui] set media"
-
-
+export const TOGGLE_MENU = "[ui] toggle menu"
 
 export const showSpinner = () => ({
   type: SHOW_SPINNER
@@ -33,4 +32,8 @@ export const setMedia = (size) => ({
   type: SET_MEDIA,
   size: size
 
+});
+
+export const toggleMenu = () => ({
+  type: TOGGLE_MENU
 });

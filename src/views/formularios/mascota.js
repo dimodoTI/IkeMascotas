@@ -26,7 +26,9 @@ import {
 
 import {
     CANCELAR,
-    ACEPTAR
+    ACEPTAR,
+    LEFT,
+    NARANJA
 } from "../../../assets/icons/icons";
 import {
     add as addMascota,
@@ -38,7 +40,6 @@ import {
 import {
     nanoInput
 } from "@brunomon/nano-input"
-
 
 const MASCOTA_SELECCIONADA = "mascotas.selectedTimeStamp"
 const OPCION_SELECCIONADA = "ui.opcionSeleccionada.timeStamp"
@@ -59,25 +60,41 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
         ${boton}
         ${select}
        
- 
         :host{
             
             display:grid;
-            grid-auto-flow:rows;
+            background-color:white;
+            grid-template-rows:auto auto auto 1fr auto;
             grid-gap:1rem;
             align-items:center;
             justify-items:center;
             min-width:20rem;
         }
-        
+        #status{
+            display:grid;
+            grid-auto-flow:column;
+            align-items:center;
+            background-color: white;
+            color:var(--primary-color);
+            fill:var(--primary-color);
+            stroke:var(--primary-color);
+            justify-self: stretch;
+            padding: .5rem;
+            border-bottom:1px solid #e3e3e3;
+            background-color:#f4f3f1
+        }
+        :host(:not([media-size="small"])) #status{
+            display:none
+        }
+       
         :host([media-size="small"]){
             position:absolute;
             top:-100vh;
             left:0 ;
             width:100%;
             height:100%;           
-            background-color:var(--color-formulario);
-            padding:.5rem;
+            background-color:white;
+            grid-gap:0;
             transition:all .5s
         }
         :host([media-size="small"][editando]){
@@ -95,15 +112,15 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
        
         #titulo{
             display:grid;
-            width:100%;
-            grid-template-columns:1fr auto;
-            justify-items:center;
-            grid-gap:.5rem;
-            color:white;
-            stroke:white;
-            fill:white;
+            justify-self:stretch;
+            grid-template-columns: auto 1fr;
             align-items:center;
-            margin:.5rem
+            justify-items:start;
+            grid-gap:.5rem;
+            font-size:1.5rem;
+            margin:1rem;
+            background-color:white;
+            color:Black;
         }
         #cuerpo{
             display:grid;
@@ -113,36 +130,26 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
         #botonera{
             display:grid;
             
-   
         }
-        #cartel{
-            color:white;
-            border:2px solid var(--color-destacado);
-            max-width:10rem;
-            padding:.3rem;
-            font-size:.8rem
+       
+        nano-input ,select{
+            color:black;
+            background-color:white;
+            border-radius:0
         }
-        a {
-            color:var(--color-destacado);
-            font-size: .8rem
-        }
-        nano-input {
-            color:white;
-            background-color:rgb(0,0,0,.3);
-            border-radius:4px
-        }
-        
-
         
         `
     }
     render() {
         return html `
+            <div id="status" style="font-weight:bold"> 
+                <div>${NARANJA}</div>
+                <div class="" @click="${this.cerrar}" id="cerrar">${LEFT}</div>
+            </div>       
             <div id="titulo">
-                <div>MI MASCOTA</div>
-                <div class="boton" id="cerrar" @click="${this.cerrar}">${CANCELAR}</div>
-                
+                <div>Mi Mascota</div>
             </div>
+            
             <div id ="cuerpo">
                 <div class="select" style="width:15rem;height:3rem">
                     <label for="tipo">Tipo</label>
@@ -157,12 +164,10 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
             </div>  
             
             <div id="botonera" class="boton" @click="${this.salvar}">
-                <div>${ACEPTAR}</div>
-                <div>${this.agregando?"AGREGAR":"GUARDAR"}</div>
+                <div>${this.agregando?"Agregar":"Guardar"}</div>
             </div>   
         `
     }
-
 
     stateChanged(state, name) {
 

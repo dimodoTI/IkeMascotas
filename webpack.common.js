@@ -22,7 +22,7 @@ module.exports = {
             title: "Titulo",
             template: "./src/index.html",
             filename: "index.html",
-            favicon: "./assets/icons/favicon.ico"
+            favicon: "./assets/icons/favicon.png"
         })
     ],
     module: {
@@ -40,7 +40,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(woff|ttf)$/,
+                test: /\.(woff|ttf|woff2)$/,
                 use: {
                     loader: "url-loader",
                     options: {

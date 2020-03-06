@@ -21,12 +21,14 @@ import {
 } from "../css/input"
 
 import {
-    CANCELAR,
-    ACEPTAR,
+    LEFT,
     LISTA_ADD,
     FOTO,
     HOSPITAL,
     ALARMA,
+    TRASH,
+    NARANJA,
+    MENU,
 } from "../../../assets/icons/icons";
 import {
     select,
@@ -45,9 +47,9 @@ import {
     appMascota
 } from "../formularios/mascota"
 import {
-    selectMenu
+    selectMenu,
+    toggleMenu
 } from "../../redux/actions/ui";
-
 
 const MASCOTAS = "mascotas.timeStamp"
 
@@ -70,33 +72,50 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
         :host{
             position:absolute;
             display:grid;
-            grid-auto-flow:rows;
-            grid-gap:1rem;
+            grid-template-rows:auto auto 1fr auto;
             align-items:center;
-            justify-items:center;            
+            justify-items:center;
             transition: all .5s ease-in-out;
-            padding-bottom:1rem;                   
-       
+            background-color:white;
+            color:black;
+            grid-gap:.5rem;
+        }
+        #status{
+            display:grid;
+            grid-auto-flow:column;
+            align-items:center;
+            background-color: white;
+            color:var(--primary-color);
+            fill:var(--primary-color);
+            stroke:var(--primary-color);
+            justify-self: stretch;
+            padding: .5rem;
+            border-bottom:1px solid #e3e3e3;
+            background-color:#f4f3f1
         }
         
         :host([media-size="small"][editando]) #lista{
             display:none
         }
-        
+      
         :host(:not([media-size="small"])){
             width:70%;
-            height:70%;    
+            height:80%;    
             left:50%;
-            top:50%;
+            top:55%;
             transform:translate(-50%,-50%);
+           
         }
+        
         :host([media-size="small"]){
             top:0;
             left:0;
             width:100%;
             height:100%;           
-            background-color:var(--color-lista);
-            padding:.5rem
+            background-color:white;
+            padding:0;
+            grid-gap:0;
+            align-items:start
         }
         :host([oculto]){
             left:-50rem
@@ -104,15 +123,17 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
         #titulo{
             display:grid;
             justify-self:stretch;
-            grid-template-columns: 1fr auto;
-            justify-items:center;
-            grid-gap:.5rem;
-            color:white;
-            stroke:white;
-            fill:white;
+            grid-template-columns: auto 1fr;
             align-items:center;
-            margin:.5rem
+            justify-items:start;
+            grid-gap:.5rem;
+            font-size:1.5rem;
+            margin:1rem;
+            background-color:white;
+            color:Black;
+
         }
+       
         #cuerpo{
             display:grid;
             grid-template-columns:2fr 1fr;
@@ -125,9 +146,7 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             padding:0
             
         }
-        :host([media-size="small"]) #fecha{
-           display:none
-        }
+       
         #lista{
             display:grid;
             grid-auto-flow:row;
@@ -136,66 +155,104 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             overflow-y:auto;
             align-content:start;
         }
+        :host([media-size="small"]) #lista{
+            padding:.3rem
+        }
+        :host([media-size="small"]) .row{
+            padding:0
+        }
+        :host([media-size="small"]) .row .datos{
+            color:black
+        }
+        :host([media-size="small"]) .row #fecha{
+            display:none
+        }
+        :host([media-size="small"]) .row .foto{
+            display:grid;
+            background-color:var(--orange-5);
+            align-self:stretch;
+            justify-self:stretch;
+            align-items:center;
+            justify-content:center;
+            padding:.3rem
+        }
+        :host([media-size="small"]) .row .foto svg{
+            display:grid;
+            height:2rem;
+            width:2rem;
+        }
+        :host([media-size="small"]) .row .foto .circulo{
+            display: grid;
+            background-color: white;
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            align-items: center;
+            justify-items: center;
+        }
         .row{
             display:grid;
             grid-gap:1rem;
             grid-template-columns:1fr 5fr auto auto auto;
-            background-color:rgba(0,0,0,.5);
+            background-color:white;
+            box-shadow:var(--shadow-elevation-2-box);
             min-height:4rem;
             padding:.3rem;
-            color:white;
             align-items:center;
             cursor:pointer
-           
         }
         .row .foto svg{
             height:3rem;
             width:3rem;
             stroke:white;          
-           
         }
         .row .datos {
             display:grid;
             grid-auto-flow:row
         }
         .row .datos .nombre {
-           color:var(--color-destacado);
+           color:var(--orange);
            font-size:1.2rem;
            font-weight:bold
         }
         .row .datos .otros{
           display:grid;
           grid-auto-flow:column;
-          
         }
         .emptyRow{
             display:grid;
-           
             grid-auto-flow:row;
-           
-            background-color:rgba(0,0,0,.5);
+            background-color:rgba(0,0,0,.1);
             height:3rem;
-            
         }
-        
-        
-        #botonera{
+       
+        :host([media-size="small"]) .botonTarjeta{
+            align-self:start;
+         
+        }
+        .botonera{
             display:grid;
             grid-auto-flow:row;
+            padding:1rem;
             
-          
-   
         }
+        nano-input {
+            color:black;
+            background-color:white;
+            border-radius:0;
+        }       
 
-
-        
         `
     }
     render() {
         return html `
+         
+        <div id="status" style="font-weight:bold"> 
+            <div>${NARANJA}</div>
+            <div style="justify-self:end" @click="${this.cerrar}">${MENU}</div>
+        </div>       
         <div id="titulo">
-            <div style="font-weight:bold">MIS MASCOTAS</div>
-            <div class="boton" @click="${this.cerrar}">${CANCELAR}</div>
+            <div>Mascota/s</div>
         </div>
         <div id="cuerpo">
             <div id="lista">
@@ -204,7 +261,7 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             <app-mascota id="formulario" media-size="${this.mediaSize}" ?editando="${this.editando}"></app-mascota>
         </div>
         <div class="botonera">
-            <div class="boton" @click="${this.agregar}">${LISTA_ADD} NUEVA MASCOTA</div>
+            <div class="boton" @click="${this.agregar}">Nueva Mascota</div>
         </div>
             
         `
@@ -214,18 +271,21 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
         if (this.items.length > 0) {
             return this.items.map(item => html `
                 <div class="row" .item=${item} @click="${this.seleccionar}">
-                    <div class="foto">${FOTO}</div>
+
+                    <div class="foto"><div class="circulo">${FOTO}</div></div>
                     <div class="datos">
                         <div class="nombre">${item.nombre}</div>
-                        <div class="otros">
+                        <div class="otros" style="overflow-x:visible">                                                    
                             <div id="fecha">${new Date(item.FN).toDateString()}</div>
                             <div>(${item.tipo})</div>
                         </div>
                         
-                    </div>                  
-                    <div class="boton" @click="${this.verVacunas}" .item="${item}">${ALARMA}</div>
-                    <div class="boton" @click="${this.verHistoria}" .item="${item}">${HOSPITAL}</div>
-                    <div class="boton">${CANCELAR}</div>
+                    </div>
+                   
+                    <div class="botonTarjeta" @click="${this.verVacunas}" .item="${item}">${ALARMA}</div>
+                    <div class="botonTarjeta" @click="${this.verHistoria}" .item="${item}">${HOSPITAL}</div>
+                    <div class="botonTarjeta">${TRASH}</div> 
+                  
                 </div>
                 `)
         } else {
@@ -234,13 +294,11 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             return listaVacia.map(item => html `
                 <div class="emptyRow">
 
-                   
                 </div>
                 `)
 
         }
     }
-
 
     stateChanged(state, name) {
         if (name == OPCION_SELECCIONADA) {
@@ -279,12 +337,9 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
     }
     cerrar() {
         this.oculto = true
-        store.dispatch(selectMenu(""))
+        store.dispatch(toggleMenu())
     }
-    /*  salvar() {
-         store.dispatch(update(this.shadowRoot.querySelector("#nombre").value, this.shadowRoot.querySelector("#documento").value))
-         this.oculto = true
-     } */
+
     static get properties() {
         return {
             oculto: {
