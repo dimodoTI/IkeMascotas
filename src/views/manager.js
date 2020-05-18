@@ -142,8 +142,10 @@ export class viewManager extends connect(store, MEDIA_CHANGE, MENU_OPEN)(LitElem
         .naranja{
             display:grid;
             grid-template-columns:auto 1fr;
-            align-items:end;
-            grid-gap:.3rem
+            align-items:center;
+            grid-gap:.3rem;
+            font-size:1.2rem
+
         }
         `
     }
