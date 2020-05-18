@@ -31,6 +31,8 @@ import {
     NARANJA
 } from "../../../assets/icons/icons"
 
+
+
 export class appMenu extends connect(store)(LitElement) {
     constructor() {
         super();
@@ -126,7 +128,7 @@ export class appMenu extends connect(store)(LitElement) {
         return html `
 
             <div class="botonMenu separador" @click="${this.toggle}">
-                <div>Naranja</div>
+                <div>${process.env.TITULO}</div>
             </div>
             
             <div class="menuItem" @click="${this.selectMenu}" .value="${"TITULAR"}">

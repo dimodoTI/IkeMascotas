@@ -1,6 +1,6 @@
 html {
-    --orange: #8896FF;
-    --orange-5: rgb(92, 111, 255, .5);
+    --orange: #ff6602;
+    --orange-5: rgba(255, 102, 0, .5);
     --color-primario: #025790;
     --color-error: #cf2020;
     --color-ok: #06a563;
@@ -15,7 +15,7 @@ html {
     --letra-clara: #ffffff;
     --color-destacado: #ffb458;
     --onsurface-color-helper: #5a5856;
-    --primary-color: #8896FF;
+    --primary-color: #ff6600;
     --color-lista: #7f0d0d;
     --color-formulario: rgb(123, 76, 19);
     --color-titular: #891597;

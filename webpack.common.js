@@ -3,6 +3,7 @@ const {
 } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     optimization: {
@@ -17,6 +18,7 @@ module.exports = {
         app: './src/sandbox.js'
     },
     plugins: [
+        new Dotenv(),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: "Titulo",

@@ -20,6 +20,7 @@
     "@brunomon/nano-input": "^2.0.4",
     "@brunomon/odata-fetch-factory": "^2.0.0",
     "css-loader": "^3.4.1",
+    "dotenv-webpack": "^1.8.0",
     "file-loader": "^5.0.2",
     "html-webpack-plugin": "^3.2.0",
     "lit-element": "^2.2.1",
