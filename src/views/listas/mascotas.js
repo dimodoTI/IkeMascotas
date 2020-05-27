@@ -242,14 +242,25 @@ export class listaMascotas extends connect(store, MASCOTAS, OPCION_SELECCIONADA)
             border-radius:0;
         }       
 
+        .naranja{
+            display:grid;
+            grid-template-columns:auto 1fr;
+            align-items:center;
+            grid-gap:.3rem;
+            font-size:1.2rem
+        }
+
         `
     }
     render() {
         return html `
          
         <div id="status" style="font-weight:bold"> 
-            <div>${NARANJA}</div>
-            <div style="justify-self:end" @click="${this.cerrar}">${MENU}</div>
+            <div class="naranja">
+                <div>${NARANJA}</div>
+                <div>${process.env.SUBTITULO}</div>
+            </div>
+            <div style="justify-self:end" @click="${this.cerrar}">${LEFT}</div>
         </div>       
         <div id="titulo">
             <div>Mascota/s</div>

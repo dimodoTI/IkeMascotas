@@ -137,13 +137,23 @@ export class appMascota extends connect(store, MASCOTA_SELECCIONADA, OPCION_SELE
             background-color:white;
             border-radius:0
         }
+        .naranja{
+            display:grid;
+            grid-template-columns:auto 1fr;
+            align-items:center;
+            grid-gap:.3rem;
+            font-size:1.2rem
+        }
         
         `
     }
     render() {
         return html `
             <div id="status" style="font-weight:bold"> 
-                <div>${NARANJA}</div>
+                <div class="naranja">
+                    <div>${NARANJA}</div>
+                    <div>${process.env.SUBTITULO}</div>
+                </div>
                 <div class="" @click="${this.cerrar}" id="cerrar">${LEFT}</div>
             </div>       
             <div id="titulo">

@@ -233,14 +233,24 @@ export class listaAgenda extends connect(store, AGENDA, OPCION_SELECCIONADA, CUR
             justify-items: start;
            
         }
+        .naranja{
+            display:grid;
+            grid-template-columns:auto 1fr;
+            align-items:center;
+            grid-gap:.3rem;
+            font-size:1.2rem
+        }
         
         `
     }
     render() {
         return html `
         <div id="status" style="font-weight:bold"> 
-            <div>${NARANJA}</div>
-            <div style="justify-self:end" @click="${this.cerrar}">${MENU}</div>
+            <div class="naranja">
+                <div>${NARANJA}</div>
+                <div>${process.env.SUBTITULO}</div>
+            </div>
+            <div style="justify-self:end" @click="${this.cerrar}">${LEFT}</div>
         </div>       
         <div id="titulo">
             <div>Agenda de Vacunación</div>

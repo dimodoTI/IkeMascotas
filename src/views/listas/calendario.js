@@ -204,6 +204,13 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
             color:var(--primary-color);
             font-size:.8rem
         }
+        .naranja{
+            display:grid;
+            grid-template-columns:auto 1fr;
+            align-items:center;
+            grid-gap:.3rem;
+            font-size:1.2rem
+        }
 
         `
     }
@@ -211,8 +218,11 @@ export class listaCalendario extends connect(store, OPCION_SELECCIONADA)(LitElem
         return html `
 
        <div id="status" style="font-weight:bold"> 
-            <div>${NARANJA}</div>
-            <div style="justify-self:end" @click="${this.cerrar}">${MENU}</div>
+            <div class="naranja">
+                <div>${NARANJA}</div>
+                <div>${process.env.SUBTITULO}</div>
+            </div>
+            <div style="justify-self:end" @click="${this.cerrar}">${LEFT}</div>
         </div>       
         <div id="titulo">
             <div>Calendario de Vacunación</div>
